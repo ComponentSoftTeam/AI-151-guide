@@ -25,12 +25,17 @@
     </script>
 
     <h1>AI-151 Environment Guide</h1>
-    <p>
-        This tutorial will show you how to set up your environment and Codeium credentials. You have two options to use
-        Codeium: <a href="#vscode">VSCode Remote Access (SSH)</a>, and the <a href="#lab">Remote Lab Environment (Guacamole)</a>.
-    </p>
+    <p>This tutorial will show you how to set up your environment and Codeium credentials. You have two options to use our environment:</p>
+    <ul>
+        <li>
+            <p><a href="#vscode">VSCode Remote Access (SSH)</a>: You can connect to our environment via SSH, and use your own laptop that has VSCode installed. This is a more comfortable option, because you can use your own setup and keyboard shortcuts.</p>
+        </li>
+        <li>
+            <p><a href="#lab">Remote Lab Environment (Guacamole)</a>: You can also use the Guacamole interface. You are working on the same VM as the SSH option, but through a web interface.</p>
+        </li>
+    </ul>
 
-    <h2 id="vscode">VSCode Remote Access (SSH)</h2>
+    <h2 id="vscode">1. VSCode Remote Access (SSH)</h2>
     <p>This section shows you how to access our environment and log in to Codeium using VSCode Remote Access (SSH).</p>
     <p>You will need to do the following steps:</p>
     <ol>
@@ -46,9 +51,7 @@
             <img src="img/signout.png" alt="Sign out" width="100%" height="100%">
         </li>
         <li>
-            <p>
-                Log in to Codeium in VSCode, but do not open the link automatically. Copy the link, and open it in an incognito window. This step is necessarry if you have a personal Codeium account that your browser remembered.
-            </p>
+            <p>Log in to Codeium in VSCode, but do not open the link automatically. Copy the link, and open it in an incognito window. This step is necessarry if you have a personal Codeium account that your browser remembered.</p>
             <img src="img/copy.jpg" alt="Login" width="100%" height="100%">
         </li>
         <li>
@@ -62,14 +65,33 @@
             <p>After you are done with these steps, the environment and Codeium are set up.</p>
             <p><b>Please carefully read the README file to learn about the structure of the environment. An important note is that you need to open only the folder with the name of the current modules number when doing the lab exercises. There are links for that in the README file.</b></p>
         </li>
-        <li>
-            <p>You can copy your public SSH key to our VM if you do not want to insert your password every time you open a new module.</p>
-
     </ol>
 
-    <h2 id="lab">Remote Lab Environment (Guacamole)</h2>
-
+    <h2 id="lab">2. Remote Lab Environment (Guacamole)</h2>
+    <p>This section shows you how to access our Remote Lab Environment (Guacamole).</p>
+    <ol>
+        <li>
+            <p>Go to the <a href="https://rlab-eu.componentsoft.io/">Remote Lab login page</a> and enter your credentials:</p>
+            <ul>
+                <li><b>Username:</b> <script>document.write(guacamole_name);</script></li>
+                <li><b>Password:</b> <script>document.write(pass);</script></li>
+            </ul>
+        </li>
+        <img src="img/guacamole_login.png" alt="Guacamole login">
+        <li>
+            <p>Open the <b>tunnel</b> and <b>lab_machine</b> terminals. The <b>tunnel</b> enables you to check your work during the labs in the virtual environents browser. The <b>lab_machine</b> will be your terminal that you can use.</p>
+        </li>
+        <img src="img/terminal.png" alt="Terminals">
+        <li>
+            <p>Open VSCode with the following command in the <b>lab_machine</b> terminal:</p>
+            <div class="code-container">
+                <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+                <code id="code-block">code --remote ssh-remote+rconsole@<script>document.write(domain);</script>:<script>document.write(port);</script> /home/rconsole/labs</code>
+            </div>
+        </li>
+        <li>You are now logged in to Codeium, and your environment is being set up. You should see a README file pop up in VSCode.</li>
+    </ol>
+    <p><b>Please carefully read the README file to learn about the structure of the environment. An important note is that you need to open only the folder with the name of the current modules number when doing the lab exercises. There are links for that in the README file.</b></p>
 
 </body>
-
 </html>
