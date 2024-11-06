@@ -4,11 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guide</title>
+    <title>AI-151 Environment Guide</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    Hello world!
+    <script>
+        let addr = new URL(window.location.href);
+        let port = addr.searchParams.get("port") || "&lt;PORT&gt;";
+        let domain = addr.searchParams.get("domain") || "&lt;DOMAIN&gt;";
+        let codeium_pass = addr.searchParams.get("codeium_pass") || "&lt;CODEIUM PASSWORD&gt;";
+        let codeium_email = addr.searchParams.get("codeium_email") || "&lt;CODEIUM EMAIL&gt;";
+        let guacamole_name = addr.searchParams.get("guacamole_name") || "&lt;REMOTE LAB USERNAME&gt;";
+        let pass = addr.searchParams.get("pass") || "&lt;PASSWORD&gt;";
+
+        function copyToClipboard() {
+            const code = document.getElementById("code-block").innerText;
+            navigator.clipboard.writeText(code);
+        }
+    </script>
+
+    <h1>AI-151 Environment Guide</h1>
+    <p>
+        This tutorial will show you how to set up your environment and Codeium credentials. You have two options to use
+        Codeium: <a href="#vscode">VSCode Remote Access (SSH)</a>, and the <a href="#lab">Remote Lab Environment (Guacamole)</a>.
+    </p>
+
+    <h2 id="vscode">VSCode Remote Access (SSH)</h2>
+    <p>This section shows you how to access our environment and log in to Codeium using VSCode Remote Access (SSH).</p>
+    <p>You will need to do the following steps:</p>
+    <ol>
+        <li>
+            <p>Open VSCode with a terminal command that also sets up the SSH connection:</p>
+            <div class="code-container">
+                <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+                <code id="code-block">code --remote ssh-remote+rconsole@<script>document.write(domain);</script>:<script>document.write(port);</script> /home/rconsole/labs</code>
+            </div>
+        </li>
+        <li>
+            <p>If you are already logged in to Codeium in VSCode with your personal Codeium account, please log out.</p>
+            <img src="img/signout.png" alt="Sign out" width="100%" height="100%">
+        </li>
+        <li>
+            <p>
+                Log in to Codeium in VSCode, but do not open the link automatically. Copy the link, and open it in an incognito window. This step is necessarry if you have a personal Codeium account that your browser remembered.
+            </p>
+            <img src="img/copy.jpg" alt="Login" width="100%" height="100%">
+        </li>
+        <li>
+            <p>Enter the following credentials on the Codeium page:</p>
+            <ul>
+                <li><b>Email:</b> <script>document.write(codeium_email);</script></li>
+                <li><b>Password:</b> <script>document.write(codeium_pass);</script></li>
+            </ul>
+            <img src="img/auth.png" alt="Authentication" width="100%" height="100%">
+            <img src="img/open.jpg" alt="Open VSCode" width="100%" height="100%">
+            <p>After you are done with these steps, the environment and Codeium are set up.</p>
+            <p><b>Please carefully read the README file to learn about the structure of the environment. An important note is that you need to open only the folder with the name of the current modules number when doing the lab exercises. There are links for that in the README file.</b></p>
+        </li>
+        <li>
+            <p>You can copy your public SSH key to our VM if you do not want to insert your password every time you open a new module.</p>
+
+    </ol>
+
+    <h2 id="lab">Remote Lab Environment (Guacamole)</h2>
+
+
 </body>
 
 </html>
