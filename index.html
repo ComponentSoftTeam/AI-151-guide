@@ -42,10 +42,6 @@
     <ol>
         <li>
             <p>Open VSCode with a terminal command that also sets up the SSH connection:</p>
-            <div class="code-container">
-                <button class="copy-button" onclick="copyToClipboard('code-remote')">Copy</button>
-                <code id="code-remote">code --remote ssh-remote+rconsole@<script>document.write(domain);</script>:<script>document.write(port);</script> /home/rconsole/labs</code>
-            </div>
             <p>Make sure that you run this command in the correct place:</p>
             <ul>
                 <li>
@@ -55,6 +51,12 @@
                     <p><b>Linux and macOS:</b> Run the command in your terminal. Before running the command, close any other connections inside that terminal.</p>
                 </li>
             </ul>
+            <div class="code-container">
+                <button class="copy-button" onclick="copyToClipboard('code-remote')">Copy</button>
+                <code id="code-remote">code --remote ssh-remote+rconsole@<script>document.write(domain);</script>:<script>document.write(port);</script> /home/rconsole/labs</code>
+            </div>
+            <p>After VSCode opens, choose Linux as the destination operating system.</p>
+            <p>You wil also need to input your password: <b><script>document.write(pass);</script></b></p>
         </li>
         <li>
             <p>If you are already logged in to Codeium in VSCode with your personal Codeium account, please log out.</p>
