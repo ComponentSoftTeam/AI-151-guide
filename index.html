@@ -10,13 +10,26 @@
 
 <body>
     <script>
-        let addr = new URL(window.location.href);
-        let port = addr.searchParams.get("port") ?? "&lt;PORT&gt;";
-        let domain = addr.searchParams.get("domain") ?? "&lt;DOMAIN&gt;";
-        let codeium_pass = addr.searchParams.get("codeium_pass") ?? "&lt;CODEIUM PASSWORD&gt;";
-        let codeium_email = addr.searchParams.get("codeium_email") ?? "&lt;CODEIUM EMAIL&gt;";
-        let guacamole_name = addr.searchParams.get("guacamole_name") ?? "&lt;REMOTE LAB USERNAME&gt;";
-        let pass = addr.searchParams.get("pass") ?? "&lt;PASSWORD&gt;";
+        // FIXME: We are expecting passwords, that have '+' in them without being encoded.
+        // let addr = new URL(window.location.href);
+        const params = window.location.search;
+        const paramsDict = params.slice(1).split("&").reduce((acc, curr) => {
+            // FIXME: We want to allow non url encoded '=' characters in the url
+            // let [key, value] = curr.split("=");
+            const index = curr.indexOf("=");
+            const key = curr.slice(0, index);
+            const value = curr.slice(index + 1);
+            acc[key] = value;
+            return acc;
+        }, {});
+
+        const port = paramsDict["port"] ?? "&lt;PORT&gt;";
+        const domain = paramsDict["domain"] ?? "&lt;DOMAIN&gt;";
+        const codeium_pass = paramsDict["codeium_pass"] ?? "&lt;CODEIUM PASSWORD&gt;";
+        const codeium_email = paramsDict["codeium_email"] ?? "&lt;CODEIUM EMAIL&gt;";
+        const guacamole_name = paramsDict["guacamole_name"] ?? "&lt;REMOTE LAB USERNAME&gt;";
+        const pass = paramsDict["pass"] ?? "&lt;PASSWORD&gt;";
+        console.log("The pass is: ", pass);
 
 
         function copyToClipboard(elementID) {
