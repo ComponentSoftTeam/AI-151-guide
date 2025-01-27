@@ -1,83 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI-151 Environment Guide</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
 
-<body>
-    <script>
-        // FIXME: We are expecting passwords, that have '+' in them without being encoded.
-        // let addr = new URL(window.location.href);
-        const params = window.location.search;
-        const paramsDict = params.slice(1).split("&").reduce((acc, curr) => {
-            // FIXME: We want to allow non url encoded '=' characters in the url
-            // let [key, value] = curr.split("=");
-            const index = curr.indexOf("=");
-            const key = curr.slice(0, index);
-            const value = curr.slice(index + 1);
-            acc[key] = value;
-            return acc;
+    <script defer>
+      // FIXME: We are expecting passwords, that have '+' in them without being encoded.
+      // let addr = new URL(window.location.href);
+      const params = window.location.search;
+      const paramsDict = params
+        .slice(1)
+        .split("&")
+        .reduce((acc, curr) => {
+          // FIXME: We want to allow non url encoded '=' characters in the url
+          // let [key, value] = curr.split("=");
+          const index = curr.indexOf("=");
+          const key = curr.slice(0, index);
+          const value = curr.slice(index + 1);
+          acc[key] = value;
+          return acc;
         }, {});
 
-        const port = paramsDict["port"] ?? "&lt;PORT&gt;";
-        const domain = paramsDict["domain"] ?? "&lt;DOMAIN&gt;";
-        const codeium_pass = paramsDict["codeium_pass"] ?? "&lt;CODEIUM PASSWORD&gt;";
-        const codeium_email = paramsDict["codeium_email"] ?? "&lt;CODEIUM EMAIL&gt;";
-        const guacamole_name = paramsDict["guacamole_name"] ?? "&lt;REMOTE LAB USERNAME&gt;";
-        const pass = paramsDict["pass"] ?? "&lt;PASSWORD&gt;";
-        console.log("The pass is: ", pass);
+      const port = paramsDict["port"] ?? "&lt;PORT&gt;";
+      const domain = paramsDict["domain"] ?? "&lt;DOMAIN&gt;";
+      const codeium_pass =
+        paramsDict["codeium_pass"] ?? "&lt;CODEIUM PASSWORD&gt;";
+      const codeium_email =
+        paramsDict["codeium_email"] ?? "&lt;CODEIUM EMAIL&gt;";
+      const guacamole_name =
+        paramsDict["guacamole_name"] ?? "&lt;REMOTE LAB USERNAME&gt;";
+      const pass = paramsDict["pass"] ?? "&lt;PASSWORD&gt;";
+      console.log("The pass is: ", pass);
 
+      function copyText(type) {
+        let textElement, notification;
 
-        function copyToClipboard(elementID) {
-            const code = document.getElementById(elementID).innerText;
-            navigator.clipboard.writeText(code);
+        // Determine which text to copy based on the type
+        if (type === "username") {
+          notification = document.getElementById("usernameNotification");
+        } else {
+          notification = document.getElementById("passwordNotification");
         }
-    </script>
 
+        // Create a temporary textarea element to hold the text
+        // For copatibility
+        if (!!navigator.clipboard) {
+          navigator.clipboard.writeText(
+            type === "username" ? guacamole_name : pass,
+          );
+        } else {
+          const tempTextArea = document.createElement("textarea");
+          tempTextArea.value = type === "username" ? guacamole_name : pass;
+          document.body.appendChild(tempTextArea);
+          tempTextArea.select();
+          document.execCommand("copy");
+          document.body.removeChild(tempTextArea);
+        }
+
+        // Show notification
+        notification.style.display = "inline-block";
+        notification.style.opacity = 1; // Make it visible
+        setTimeout(() => {
+          notification.style.opacity = 0; // Fade out
+          setTimeout(() => {
+            notification.style.display = "none"; // Hide after fade
+          }, 300); // Time to match the fade out duration
+        }, 2000); // Show for 2 seconds
+      }
+    </script>
+  </head>
+
+  <body>
     <h1>AI-151 Environment Guide</h1>
-    <p>This tutorial will show you how to set up your environment and Codeium credentials.</p>
+    <p>This tutorial will show you how log in and use the lab environment.</p>
     <ul>
-        <li>
-            <p><a href="#lab">Remote Lab Environment (Guacamole)</a>: You can use the Guacamole interface.</p>
-        </li>
+      <li>
+        <p>
+          <a href="#lab">Remote Lab Environment (Guacamole)</a>: You can use the
+          Guacamole interface.
+        </p>
+      </li>
     </ul>
 
     <h2 id="lab">Remote Lab Environment (Guacamole)</h2>
-    <p>This section shows you how to access our Remote Lab Environment (Guacamole).</p>
+    <p>
+      This section shows you how to access our Remote Lab Environment
+      (Guacamole).
+    </p>
     <ol>
-        <li>
-            <p>Go to the <a href="https://rlab-eu.componentsoft.io/">Remote Lab login page</a> and enter your credentials:</p>
-            <ul>
-                <li><b>Username:</b> <script>document.write(guacamole_name);</script></li>
-                <li><b>Password:</b> <script>document.write(pass);</script></li>
-            </ul>
-        </li>
-        <img src="img/guacamole_login.png" alt="Guacamole login">
-        <li>
-            <p>Open the <b>tunnel</b> and <b>lab_machine</b> terminals. The <b>tunnel</b> enables you to check your work during the labs in the virtual environents browser. The <b>lab_machine</b> will be your terminal that you can use.</p>
-        </li>
-        <img src="img/terminal.png" alt="Terminals">
-        <li>
-            <p>Open VSCode with the following command in the <b>lab_machine</b> terminal:</p>
-            <div class="code-container">
-                <button class="copy-button" onclick="copyToClipboard()">Copy</button>
-                <code id="code-block">code labs</code>
+      <li>
+        <p>
+          Go to the
+          <a href="https://rlab-eu.componentsoft.io/">Remote Lab login page</a>
+          and enter your credentials:
+        </p>
+        <ul>
+          <li>
+            <div class="credential-container" id="usernameContainer">
+              <span class="credential-label"><b>Username:</b></span>
+              <span class="credential-text" id="usernameText">
+                <script>
+                  document.write(guacamole_name);
+                </script>
+              </span>
+              <img
+                onclick="copyText('username')"
+                src="./img/copy-regular.svg"
+                alt="Copy"
+                class="copy-icon"
+              />
+              <span class="copy-notification" id="usernameNotification">
+                Copied!
+              </span>
             </div>
-        </li>
-        <li>You are now logged in to Codeium, and your environment is being set up. You should see a README file pop up in VSCode.</li>
+          </li>
+          <li>
+            <div class="credential-container" id="passwordContainer">
+              <span class="credential-label"><b>Password:</b></span>
+              <span class="credential-text" id="passwordText">
+                <script>
+                  document.write(pass);
+                </script>
+              </span>
+              <img
+                onclick="copyText('password')"
+                src="./img/copy-regular.svg"
+                alt="Copy"
+                class="copy-icon"
+              />
+              <div class="copy-notification" id="passwordNotification">
+                Copied!
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <img src="img/guacamole_login.png" alt="Guacamole login" />
+      <li>
+        <p>
+          Open the <b>tunnel</b> and <b>lab_machine</b> terminals. The
+          <b>tunnel</b> enables you to check your work during the labs in the
+          virtual environents browser. The <b>lab_machine</b> will be your
+          terminal that you can use.
+        </p>
+      </li>
+      <img src="img/terminal.png" alt="Terminals" />
+      <li>
+        <p>
+          Open VSCode with the following command in the
+          <b>lab_machine</b> terminal:
+        </p>
+        <div class="code-container">
+          <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+          <code id="code-block">code labs</code>
+        </div>
+      </li>
+      <li>
+        You are now logged in to Codeium, and your environment is being set up.
+        You should see a README file pop up in VSCode.
+      </li>
     </ol>
-    <p><b>Please carefully read the README file to learn about the structure of the environment. An important note is that you need to open only the folder with the name of the current modules number when doing the lab exercises. There are links for that in the README file.</b></p>
+    <p>
+      <b
+        >Please carefully read the README file to learn about the structure of
+        the environment. An important note is that you need to open only the
+        folder with the name of the current modules number when doing the lab
+        exercises. There are links for that in the README file.</b
+      >
+    </p>
 
     <h2>Troubleshooting</h2>
     <ul>
-        <li>
-            <p><b>Testing icon is missing from Activity Bar:</b> You need to enable or install the <b>Python extension</b> in VSCode.</p>
-        </li>
+      <li>
+        <p>
+          <b>Testing icon is missing from Activity Bar:</b> You need to enable
+          or install the <b>Python extension</b> in VSCode.
+        </p>
+      </li>
     </ul>
-
-</body>
+  </body>
 </html>
