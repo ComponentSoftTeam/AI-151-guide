@@ -25,14 +25,31 @@
 
       const port = paramsDict["port"] ?? "&lt;PORT&gt;";
       const domain = paramsDict["domain"] ?? "&lt;DOMAIN&gt;";
-      const codeium_pass =
-        paramsDict["codeium_pass"] ?? "&lt;CODEIUM PASSWORD&gt;";
-      const codeium_email =
-        paramsDict["codeium_email"] ?? "&lt;CODEIUM EMAIL&gt;";
       const guacamole_name =
         paramsDict["guacamole_name"] ?? "&lt;REMOTE LAB USERNAME&gt;";
       const pass = paramsDict["pass"] ?? "&lt;PASSWORD&gt;";
       console.log("The pass is: ", pass);
+
+      // A few given ids are on rlab other are on rlab-eu
+
+      // The last 4 chars from the name
+      const id = guacamole_name.slice(-4);
+
+      const rlab_ids = [
+        "0809",
+        "0808",
+        "0807",
+        "0806",
+        "1005",
+        "1004",
+        "1003",
+        "1002",
+      ];
+
+      // rlab if in the list rlab-eu otherwise
+      const guacamole_url = rlab_ids.includes(id)
+        ? "https://rlab.componentsoft.io"
+        : "https://rlab-eu.componentsoft.io";
 
       function copyText(type) {
         let textElement, notification;
@@ -93,9 +110,20 @@
       <li>
         <p>
           Go to the
-          <a href="https://rlab-eu.componentsoft.io/" target="_blank"
-            >Remote Lab login page</a
-          >
+
+          <!-- <a href="https://rlab-eu.componentsoft.io/" target="_blank" -->
+          <!--   > -->
+          <!--   Remote Lab login page -->
+          <!-- </a> -->
+
+          <script>
+            // the ancor element above with the correct url
+            document.write(
+              '<a href="' +
+                guacamole_url +
+                '" target="_blank">Remote Lab login page</a>',
+            );
+          </script>
           and enter your credentials:
         </p>
         <ul>
