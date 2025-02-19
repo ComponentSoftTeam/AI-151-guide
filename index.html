@@ -28,13 +28,13 @@
       const guacamole_name =
         paramsDict["guacamole_name"] ?? "&lt;REMOTE LAB USERNAME&gt;";
       const pass = paramsDict["pass"] ?? "&lt;PASSWORD&gt;";
-      const pri_lab = paramsDict["pri_lab"] ?? "rlab";
+      const pri_rlab = paramsDict["pri_rlab"] ?? "rlab";
       console.log("The pass is: ", pass);
 
       // A few given ids are on rlab other are on rlab-eu
 
       // rlab if in the list rlab-eu otherwise
-      const guacamole_url = `https://${pri_lab}.componentsoft.io`
+      const guacamole_url = `https://${pri_rlab}.componentsoft.io`
 
       function copyText(type) {
         let textElement, notification;
