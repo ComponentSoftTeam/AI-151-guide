@@ -28,28 +28,13 @@
       const guacamole_name =
         paramsDict["guacamole_name"] ?? "&lt;REMOTE LAB USERNAME&gt;";
       const pass = paramsDict["pass"] ?? "&lt;PASSWORD&gt;";
+      const pri_lab = paramsDict["pri_lab"] ?? "rlab";
       console.log("The pass is: ", pass);
 
       // A few given ids are on rlab other are on rlab-eu
 
-      // The last 4 chars from the name
-      const id = guacamole_name.slice(-4);
-
-      const rlab_ids = [
-        "0809",
-        "0808",
-        "0807",
-        "0806",
-        "1005",
-        "1004",
-        "1003",
-        "1002",
-      ];
-
       // rlab if in the list rlab-eu otherwise
-      const guacamole_url = rlab_ids.includes(id)
-        ? "https://rlab.componentsoft.io"
-        : "https://rlab-eu.componentsoft.io";
+      const guacamole_url = `https://${pri_lab}.componentsoft.io`
 
       function copyText(type) {
         let textElement, notification;
